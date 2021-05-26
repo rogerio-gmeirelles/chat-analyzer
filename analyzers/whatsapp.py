@@ -3,6 +3,7 @@ from emoji import UNICODE_EMOJI
 
 chatData = {
     "authors": {},
+    "wordFrequency": {},
     "weekdayActivity": {
         "Sunday": 0,
         "Monday": 0,
@@ -107,9 +108,15 @@ def proccessMessage(line):
     if "<Media omitted>" in message:
         chatData["authors"][author]["mediaCounter"] += 1
     else:
+        words = message.split()
+        # adds to words to word frequency
+        for word in words:
+            if word in chatData["wordFrequency"].keys():
+                chatData["wordFrequency"][word] += 1
+            else:
+                chatData["wordFrequency"][word] = 1
         # counts how many words in message
-        wordCount = len(message.split())
-        chatData["authors"][author]["wordCounter"] += wordCount
+        chatData["authors"][author]["wordCounter"] += len(words)
         # checks for "bom dia", "buenos" and "boa tarde" variations in messages
         if "m di" in message or "buenos" in message or "oa ta" in message:
             chatData["authors"][author]["goodMorningCounter"] += 1
@@ -133,6 +140,13 @@ def clearsEmojiData():
                 emojis[emoji] = emojiCount
         chatData["authors"][author]["emojis"] = emojis
 
+def clearsWordFrequency():
+    wordFrequency = {}
+    for word in chatData["wordFrequency"].keys():
+        if chatData["wordFrequency"][word] > 250:
+            wordFrequency[word] = chatData["wordFrequency"][word]
+    chatData["wordFrequency"] = wordFrequency
+
 # analyzes the entire whatsapp chat
 def whatsappAnalyzer(chat):
     # read file line by line
@@ -143,6 +157,7 @@ def whatsappAnalyzer(chat):
             proccessNonTextMessage(line)
     
     clearsEmojiData()
+    clearsWordFrequency()
 
     # prints resulting analyzed data
     print(chatData)
