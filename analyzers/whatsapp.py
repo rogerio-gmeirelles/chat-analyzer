@@ -31,6 +31,7 @@ def getAuthor(messageData):
             "wordCounter": 0,
             "goodMorningCounter": 0,
             "stickerCounter": 0,
+            "loveCounter": 0,
         }
     return author
 
@@ -69,8 +70,17 @@ def proccessMessage(line):
     message = splitLine[1]
 
     chatData["authors"][author]["messageCounter"] += 1
-    if "m di" in message or "buenos" in message or "oa ta" in message:
-        chatData["authors"][author]["goodMorningCounter"] += 1
+
+
+    if "<Media omitted>" in message:
+        chatData["authors"][author]["mediaCounter"] += 1
+    else:
+        # checks for "bom dia", "buenos" and "boa tarde" variations in messages
+        if "m di" in message or "buenos" in message or "oa ta" in message:
+            chatData["authors"][author]["goodMorningCounter"] += 1
+        # checks for love declarations
+        if "te amo" in message or "meu amor" in message or "a amor" in message:
+            chatData["authors"][author]["loveCounter"] += 1
 
 # analyzes the entire whatsapp chat
 def whatsappAnalyzer(chat):
