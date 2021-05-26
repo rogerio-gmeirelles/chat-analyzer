@@ -1,3 +1,5 @@
+from emoji import UNICODE_EMOJI
+
 chatData = {
     "authors": {}
 }
@@ -33,8 +35,18 @@ def getAuthor(messageData):
             "stickerCounter": 0,
             "loveCounter": 0,
             "beautyCounter": 0,
+            "emojis": {}
         }
     return author
+
+# proccess and counts every emoji
+def proccessEmojis(author, message):
+    for character in message:
+        if character in UNICODE_EMOJI['en']:
+            if character in chatData["authors"][author]["emojis"]:
+                chatData["authors"][author]["emojis"][character] += 1
+            else:
+                chatData["authors"][author]["emojis"][character] = 1
 
 # proccess non text messages and analyzes behaviour
 def proccessNonTextMessage(line):
@@ -72,7 +84,6 @@ def proccessMessage(line):
 
     chatData["authors"][author]["messageCounter"] += 1
 
-
     if "<Media omitted>" in message:
         chatData["authors"][author]["mediaCounter"] += 1
     else:
@@ -85,6 +96,19 @@ def proccessMessage(line):
         # checks for love declarations
         if ("linda" in message and author == "Rogério M.") or ("lindo" in message and author == "Gabriela Motta"):
             chatData["authors"][author]["beautyCounter"] += 1
+        # looks for most used emojis
+        proccessEmojis(author, message)
+
+def clearsEmojiData():
+    for author in chatData["authors"]:
+        emojis = {}
+        emojiDictionary = chatData["authors"][author]["emojis"]
+        for emoji in emojiDictionary.keys():
+            emojiCount = emojiDictionary[emoji]
+            # only saves emojis used more than times by author and discards color and sex emojis
+            if emojiCount > 10 and emoji != "🏻" and emoji != "♀" and emoji != "🏽" and emoji != "🏼" and emoji != "♂" and emoji != "☝":
+                emojis[emoji] = emojiCount
+        chatData["authors"][author]["emojis"] = emojis
 
 # analyzes the entire whatsapp chat
 def whatsappAnalyzer(chat):
@@ -94,6 +118,8 @@ def whatsappAnalyzer(chat):
             proccessMessage(line)
         else:
             proccessNonTextMessage(line)
+    
+    clearsEmojiData()
 
     # prints resulting analyzed data
     print(chatData)
