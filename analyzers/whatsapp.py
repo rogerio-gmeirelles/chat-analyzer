@@ -1,7 +1,17 @@
+import datetime
 from emoji import UNICODE_EMOJI
 
 chatData = {
-    "authors": {}
+    "authors": {},
+    "weekdayActivity": {
+        "Sunday": 0,
+        "Monday": 0,
+        "Tuesday": 0,
+        "Wednesday": 0,
+        "Thursday": 0,
+        "Friday": 0,
+        "Saturday": 0,
+    }
 }
 
 def splitLines(chat):
@@ -39,6 +49,12 @@ def getAuthor(messageData):
         }
     return author
 
+# Counts how many messages by weekday
+def proccessDateActivity(messageData):
+    date = messageData.split(" - ")[0]
+    weekDay = datetime.datetime.strptime(date, "%Y/%m/%d, %H:%M:%S").strftime('%A')
+    chatData["weekdayActivity"][weekDay] += 1
+
 # proccess and counts every emoji
 def proccessEmojis(author, message):
     for character in message:
@@ -62,12 +78,14 @@ def proccessNonTextMessage(line):
         return
     elif "sticker" in line:
         splitLine = line.split("sticker", 1)
+        proccessDateActivity(splitLine[0])
         author = getAuthor(splitLine[0])
         chatData["authors"][author]["stickerCounter"] += 1
         return
     elif "ptt" in line:
         # audio file - count as 30sec readtime
         splitLine = line.split("ptt", 1)
+        proccessDateActivity(splitLine[0])
         author = getAuthor(splitLine[0])
         chatData["authors"][author]["audioCounter"] += 1
         return
@@ -81,6 +99,8 @@ def proccessMessage(line):
     splitLine = line.split(": ", 1)
     author = getAuthor(splitLine[0])
     message = splitLine[1]
+
+    proccessDateActivity(splitLine[0])
 
     chatData["authors"][author]["messageCounter"] += 1
 
