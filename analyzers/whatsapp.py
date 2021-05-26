@@ -32,6 +32,7 @@ def getAuthor(messageData):
             "goodMorningCounter": 0,
             "stickerCounter": 0,
             "loveCounter": 0,
+            "beautyCounter": 0,
         }
     return author
 
@@ -81,6 +82,9 @@ def proccessMessage(line):
         # checks for love declarations
         if "te amo" in message or "meu amor" in message or "a amor" in message:
             chatData["authors"][author]["loveCounter"] += 1
+        # checks for love declarations
+        if ("linda" in message and author == "Rogério M.") or ("lindo" in message and author == "Gabriela Motta"):
+            chatData["authors"][author]["beautyCounter"] += 1
 
 # analyzes the entire whatsapp chat
 def whatsappAnalyzer(chat):
