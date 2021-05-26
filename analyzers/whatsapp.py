@@ -1,14 +1,6 @@
 chatData = {
     "authors": {}
 }
-startingAuthorData = {
-    "audioCounter": 0,
-    "mediaCounter": 0,
-    "messageCounter": 0,
-    "wordCounter": 0,
-    "goodMorningCounter": 0,
-    "stickerCounter": 0,
-}
 
 def splitLines(chat):
     splitChat = []
@@ -32,9 +24,17 @@ def splitLines(chat):
 def getAuthor(messageData):
     author = messageData.split(" - ", 1)[1]
     if not author in chatData["authors"]:
-        chatData["authors"][author] = startingAuthorData
+        chatData["authors"][author] = {
+            "audioCounter": 0,
+            "mediaCounter": 0,
+            "messageCounter": 0,
+            "wordCounter": 0,
+            "goodMorningCounter": 0,
+            "stickerCounter": 0,
+        }
     return author
 
+# proccess non text messages and analyzes behaviour
 def proccessNonTextMessage(line):
     if "this message has been deleted" in line:
         return
