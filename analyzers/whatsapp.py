@@ -1,3 +1,6 @@
+chatData = {}
+
+
 def splitLines(chat):
     splitChat = []
     currentLine = ""
@@ -23,12 +26,16 @@ def proccessAudio(line):
     print(line)
 
 def proccessMessage(line):
-    print(line)
+    splitLine = line.split(": ", 1)
+    autor = splitLine[0].split(" - ", 1)[1]
+    message = splitLine[1]
+    print(autor + "|||" + message)
 
 def whatsappAnalyzer(chat):
     # read file line by line
     for line in splitLines(chat):
-        if ":" in line:
+        if ": " in line:
             proccessMessage(line)
         else:
             proccessAudio(line)
+    print(chatData)
