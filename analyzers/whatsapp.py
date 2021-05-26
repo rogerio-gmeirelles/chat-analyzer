@@ -87,6 +87,9 @@ def proccessMessage(line):
     if "<Media omitted>" in message:
         chatData["authors"][author]["mediaCounter"] += 1
     else:
+        # counts how many words in message
+        wordCount = len(message.split())
+        chatData["authors"][author]["wordCounter"] += wordCount
         # checks for "bom dia", "buenos" and "boa tarde" variations in messages
         if "m di" in message or "buenos" in message or "oa ta" in message:
             chatData["authors"][author]["goodMorningCounter"] += 1
@@ -106,7 +109,7 @@ def clearsEmojiData():
         for emoji in emojiDictionary.keys():
             emojiCount = emojiDictionary[emoji]
             # only saves emojis used more than times by author and discards color and sex emojis
-            if emojiCount > 10 and emoji != "🏻" and emoji != "♀" and emoji != "🏽" and emoji != "🏼" and emoji != "♂" and emoji != "☝":
+            if emojiCount > 30 and emoji != "🏻" and emoji != "♀" and emoji != "🏽" and emoji != "🏼" and emoji != "♂" and emoji != "☝":
                 emojis[emoji] = emojiCount
         chatData["authors"][author]["emojis"] = emojis
 
