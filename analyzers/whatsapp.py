@@ -123,7 +123,7 @@ def createWordCloud():
         "pro", "ta", "entao", "ai", "tava", "pois", "outro", "outra", "coisa", "ficar", "ser", "la",
         "ainda", "ate", "meio", "faz", "pode", "tao", "deu", "iria", "coisas", "acha", "tanto",
         "menos", "pouco", "alguma", "sei", "sao", "achei", "simm", "dar", "ia", "fala", "hahah",
-        "qnd", "algo", "toda", "quase", "haha", "deve", "hr"
+        "qnd", "algo", "toda", "quase", "haha", "deve", "hr", "nada", "alias", "disso", "umas", "vi"
     ])
     wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=150,mask=mask, max_font_size=60,min_font_size=7).generate(messageSummary)
 
