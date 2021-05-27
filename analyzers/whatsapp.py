@@ -1,5 +1,6 @@
 import datetime
 import numpy as np
+import nltk
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from emoji import UNICODE_EMOJI
@@ -105,6 +106,9 @@ def createWordCloud():
     # gera a wordcloud
     mask = np.array(Image.open("images/heart.png"))
     stopwords = set(STOPWORDS)
+    nltk.download('stopwords')
+    portugueseStopwords = nltk.corpus.stopwords.words('portuguese')
+    stopwords.update(portugueseStopwords)
     stopwords.update([
         "da", "meu", "em", "você", "de", "ao", "os", "que", "pra", "para", "e", "o", "a", "tb",
         "tambem", "ou", "um", "mas", "ja", "já", "se", "dp", "ne", "né", "por", "msm", "mesmo",
