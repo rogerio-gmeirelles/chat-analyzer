@@ -1,9 +1,10 @@
 import datetime
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from emoji import UNICODE_EMOJI
 
 chatData = {
     "authors": {},
-    "wordFrequency": {},
     "weekdayActivity": {
         "Sunday": 0,
         "Monday": 0,
@@ -14,6 +15,8 @@ chatData = {
         "Saturday": 0,
     }
 }
+
+messageSummary = ""
 
 def splitLines(chat):
     splitChat = []
@@ -95,6 +98,21 @@ def proccessNonTextMessage(line):
     # print(line)
     return
 
+def createWordCloud():
+    # https://sigmoidal.ai/como-criar-uma-wordcloud-em-python/
+    # gera a wordcloud
+    stopwords = set(STOPWORDS)
+    stopwords.update(["da", "meu", "em", "você", "de", "ao", "os"])
+    wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1600, height=800).generate(messageSummary)
+
+    # mostrar a imagem final
+    fig, ax = plt.subplots(figsize=(10,6))
+    ax.imshow(wordcloud, interpolation='bilinear')
+    ax.set_axis_off()
+
+    plt.imshow(wordcloud)
+    wordcloud.to_file("wordcloud.png")
+
 # proccess text messages and analyzes behaviour
 def proccessMessage(line):
     splitLine = line.split(": ", 1)
@@ -108,15 +126,11 @@ def proccessMessage(line):
     if "<Media omitted>" in message:
         chatData["authors"][author]["mediaCounter"] += 1
     else:
-        words = message.split()
-        # adds to words to word frequency
-        for word in words:
-            if word in chatData["wordFrequency"].keys():
-                chatData["wordFrequency"][word] += 1
-            else:
-                chatData["wordFrequency"][word] = 1
+        # adds message to be analyzed by the word cloud
+        global messageSummary
+        messageSummary += " " + message
         # counts how many words in message
-        chatData["authors"][author]["wordCounter"] += len(words)
+        chatData["authors"][author]["wordCounter"] += len(message.split())
         # checks for "bom dia", "buenos" and "boa tarde" variations in messages
         if "m di" in message or "buenos" in message or "oa ta" in message:
             chatData["authors"][author]["goodMorningCounter"] += 1
@@ -140,13 +154,6 @@ def clearsEmojiData():
                 emojis[emoji] = emojiCount
         chatData["authors"][author]["emojis"] = emojis
 
-def clearsWordFrequency():
-    wordFrequency = {}
-    for word in chatData["wordFrequency"].keys():
-        if chatData["wordFrequency"][word] > 250:
-            wordFrequency[word] = chatData["wordFrequency"][word]
-    chatData["wordFrequency"] = wordFrequency
-
 # analyzes the entire whatsapp chat
 def whatsappAnalyzer(chat):
     # read file line by line
@@ -157,7 +164,7 @@ def whatsappAnalyzer(chat):
             proccessNonTextMessage(line)
     
     clearsEmojiData()
-    clearsWordFrequency()
+    createWordCloud()
 
     # prints resulting analyzed data
     print(chatData)
