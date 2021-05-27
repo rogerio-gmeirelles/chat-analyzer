@@ -116,13 +116,16 @@ def createWordCloud():
     portugueseStopwords = nltk.corpus.stopwords.words('portuguese')
     stopwords.update(portugueseStopwords)
     stopwords.update([
-        "da", "meu", "em", "de", "ao", "os", "que", "pra", "para", "e", "o", "a", "tb",
-        "tambem", "ou", "um", "mas", "ja", "se", "dp", "ne", "por", "msm", "mesmo"
-        "esse", "essa", "isso", "uma", "dai", "era", "dps", "porque", "pq",
-        "mim", "kkk", "kkkkk", "acho", "ele", "ela", "vc", "eu", "na", "tipo", "mt", "sim", "nao",
-        "kkkk", "kkkkkk", "pro", "ah", "ahh", "ahhh", "ta", "entao", "ai", "tava", "pois"
+        "da", "meu", "em", "de", "ao", "os", "que", "pra", "para", "e", "o", "a", "tb", "esse",
+        "tambem", "ou", "um", "mas", "ja", "se", "dp", "ne", "por", "msm", "mesmo", "mim", "essa",
+        "isso", "uma", "dai", "era", "dps", "porque", "pq", "kkk", "kkkkk", "kkkk", "kkkkkk", "vcs",
+        "acho", "ele", "ela", "vc", "eu", "na", "tipo", "mt", "sim", "nao", "ah", "ahh", "ahhh",
+        "pro", "ta", "entao", "ai", "tava", "pois", "outro", "outra", "coisa", "ficar", "ser", "la",
+        "ainda", "ate", "meio", "faz", "pode", "tao", "deu", "iria", "coisas", "acha", "tanto",
+        "menos", "pouco", "alguma", "sei", "sao", "achei", "simm", "dar", "ia", "fala", "hahah",
+        "qnd", "algo", "toda", "quase", "haha", "deve", "hr"
     ])
-    wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=100,mask=mask, max_font_size=100,min_font_size=1).generate(messageSummary)
+    wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=150,mask=mask, max_font_size=60,min_font_size=7).generate(messageSummary)
 
     # generates the final image
     fig, ax = plt.subplots(figsize=(10,10))
