@@ -7,6 +7,7 @@ from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from emoji import UNICODE_EMOJI
 from PIL import Image
 
+# initial chat data
 chatData = {
     "authors": {},
     "weekdayActivity": {
@@ -20,8 +21,10 @@ chatData = {
     }
 }
 
+# variable which will store every word and message for the word cloud
 messageSummary = ""
 
+# split chat in messages
 def splitLines(chat):
     splitChat = []
     currentLine = ""
@@ -102,10 +105,12 @@ def proccessNonTextMessage(line):
     # print(line)
     return
 
+# creates word cloud based on messageSummary
 def createWordCloud():
-    # https://sigmoidal.ai/como-criar-uma-wordcloud-em-python/
     # gera a wordcloud
     mask = np.array(Image.open("images/heart.png"))
+
+    # remove words from cloud
     stopwords = set(STOPWORDS)
     nltk.download('stopwords')
     portugueseStopwords = nltk.corpus.stopwords.words('portuguese')
@@ -119,11 +124,10 @@ def createWordCloud():
     ])
     wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=100,mask=mask, max_font_size=100,min_font_size=1).generate(messageSummary)
 
-    # mostrar a imagem final
+    # generates the final image
     fig, ax = plt.subplots(figsize=(10,10))
     ax.imshow(wordcloud, interpolation='bilinear')
     ax.set_axis_off()
-
     plt.imshow(wordcloud)
     wordcloud.to_file("wordcloud.png")
 
@@ -133,10 +137,13 @@ def proccessMessage(line):
     author = getAuthor(splitLine[0])
     message = splitLine[1]
 
+    # counts how many messages by weekday
     proccessDateActivity(splitLine[0])
 
+    # counts message for which ever author
     chatData["authors"][author]["messageCounter"] += 1
 
+    # checks if message is a media or not
     if "<Media omitted>" in message:
         chatData["authors"][author]["mediaCounter"] += 1
     else:
@@ -157,6 +164,7 @@ def proccessMessage(line):
         # looks for most used emojis
         proccessEmojis(author, message)
 
+# removes less frequent or unecessary emojis
 def clearsEmojiData():
     for author in chatData["authors"]:
         emojis = {}
