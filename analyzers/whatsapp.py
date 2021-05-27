@@ -1,7 +1,9 @@
 import datetime
+import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from emoji import UNICODE_EMOJI
+from PIL import Image
 
 chatData = {
     "authors": {},
@@ -101,12 +103,19 @@ def proccessNonTextMessage(line):
 def createWordCloud():
     # https://sigmoidal.ai/como-criar-uma-wordcloud-em-python/
     # gera a wordcloud
+    mask = np.array(Image.open("images/heart.png"))
     stopwords = set(STOPWORDS)
-    stopwords.update(["da", "meu", "em", "você", "de", "ao", "os"])
-    wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1600, height=800).generate(messageSummary)
+    stopwords.update([
+        "da", "meu", "em", "você", "de", "ao", "os", "que", "pra", "para", "e", "o", "a", "tb",
+        "tambem", "ou", "um", "mas", "ja", "já", "se", "dp", "ne", "né", "por", "msm", "mesmo",
+        "esse", "essa", "isso", "é", "só", "lá", "uma", "dai", "era", "dps", "porque", "pq",
+        "mim", "kkk", "Kkkkk", "acho", "ele", "ela", "vc", "eu", "na", "Tipo", "mt", "sim", "nao",
+        "não", "kkkk", "Kkkkkk", "pro"
+    ])
+    wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=100,mask=mask, max_font_size=100,min_font_size=1).generate(messageSummary)
 
     # mostrar a imagem final
-    fig, ax = plt.subplots(figsize=(10,6))
+    fig, ax = plt.subplots(figsize=(10,10))
     ax.imshow(wordcloud, interpolation='bilinear')
     ax.set_axis_off()
 
