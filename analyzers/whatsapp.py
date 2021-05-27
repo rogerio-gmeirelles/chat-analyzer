@@ -1,6 +1,7 @@
-import datetime
-import numpy as np
 import nltk
+import datetime
+import unidecode
+import numpy as np
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
 from emoji import UNICODE_EMOJI
@@ -113,8 +114,8 @@ def createWordCloud():
         "da", "meu", "em", "você", "de", "ao", "os", "que", "pra", "para", "e", "o", "a", "tb",
         "tambem", "ou", "um", "mas", "ja", "já", "se", "dp", "ne", "né", "por", "msm", "mesmo",
         "esse", "essa", "isso", "é", "só", "lá", "uma", "dai", "era", "dps", "porque", "pq",
-        "mim", "kkk", "Kkkkk", "acho", "ele", "ela", "vc", "eu", "na", "Tipo", "mt", "sim", "nao",
-        "não", "kkkk", "Kkkkkk", "pro"
+        "mim", "kkk", "kkkkk", "acho", "ele", "ela", "vc", "eu", "na", "tipo", "mt", "sim", "nao",
+        "não", "kkkk", "kkkkkk", "pro", "ah", "ahh", "ahhh", "ta", "entao", "ai", "tava", "pois"
     ])
     wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=100,mask=mask, max_font_size=100,min_font_size=1).generate(messageSummary)
 
@@ -141,7 +142,7 @@ def proccessMessage(line):
     else:
         # adds message to be analyzed by the word cloud
         global messageSummary
-        messageSummary += " " + message
+        messageSummary += " " + unidecode.unidecode(message.lower())
         # counts how many words in message
         chatData["authors"][author]["wordCounter"] += len(message.split())
         # checks for "bom dia", "buenos" and "boa tarde" variations in messages
