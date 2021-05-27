@@ -1,6 +1,6 @@
 from analyzers.whatsapp import whatsappAnalyzer
 
-whatsappChats = ["chats/whats_gabi_ate_20_maio.txt"]
+whatsappChats = ["chats/whatsapp/whats_gabi.txt"]
 
 for whatsChat in whatsappChats:
     file = open(whatsChat, "r")
