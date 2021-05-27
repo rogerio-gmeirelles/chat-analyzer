@@ -111,11 +111,11 @@ def createWordCloud():
     portugueseStopwords = nltk.corpus.stopwords.words('portuguese')
     stopwords.update(portugueseStopwords)
     stopwords.update([
-        "da", "meu", "em", "você", "de", "ao", "os", "que", "pra", "para", "e", "o", "a", "tb",
-        "tambem", "ou", "um", "mas", "ja", "já", "se", "dp", "ne", "né", "por", "msm", "mesmo",
-        "esse", "essa", "isso", "é", "só", "lá", "uma", "dai", "era", "dps", "porque", "pq",
+        "da", "meu", "em", "de", "ao", "os", "que", "pra", "para", "e", "o", "a", "tb",
+        "tambem", "ou", "um", "mas", "ja", "se", "dp", "ne", "por", "msm", "mesmo"
+        "esse", "essa", "isso", "uma", "dai", "era", "dps", "porque", "pq",
         "mim", "kkk", "kkkkk", "acho", "ele", "ela", "vc", "eu", "na", "tipo", "mt", "sim", "nao",
-        "não", "kkkk", "kkkkkk", "pro", "ah", "ahh", "ahhh", "ta", "entao", "ai", "tava", "pois"
+        "kkkk", "kkkkkk", "pro", "ah", "ahh", "ahhh", "ta", "entao", "ai", "tava", "pois"
     ])
     wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=100,mask=mask, max_font_size=100,min_font_size=1).generate(messageSummary)
 
