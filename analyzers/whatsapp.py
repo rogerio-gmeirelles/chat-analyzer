@@ -128,7 +128,7 @@ def createWordCloud():
     ])
     wordcloud = WordCloud(
         stopwords=stopwords,
-        background_color="black",
+        background_color="#0F0F1E",
         width=1000,
         height=1000,
         max_words=150,
