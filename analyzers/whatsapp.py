@@ -125,7 +125,17 @@ def createWordCloud():
         "menos", "pouco", "alguma", "sei", "sao", "achei", "simm", "dar", "ia", "fala", "hahah",
         "qnd", "algo", "toda", "quase", "haha", "deve", "hr", "nada", "alias", "disso", "umas", "vi"
     ])
-    wordcloud = WordCloud(stopwords=stopwords, background_color="black", width=1000, height=1000, max_words=150,mask=mask, max_font_size=60,min_font_size=7).generate(messageSummary)
+    wordcloud = WordCloud(
+        stopwords=stopwords,
+        background_color="black",
+        width=1000,
+        height=1000,
+        max_words=150,
+        mask=mask,
+        font_path='fonts/Rosemary.ttf',
+        max_font_size=60,
+        min_font_size=7
+    ).generate(messageSummary)
 
     # generates the final image
     fig, ax = plt.subplots(figsize=(10,10))
