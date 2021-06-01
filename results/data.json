@@ -1,0 +1,65 @@
+{
+    "authors": {
+        "Gabriela Motta": {
+            "audioCounter": 896,
+            "mediaCounter": 1418,
+            "messageCounter": 38493,
+            "wordCounter": 225500,
+            "goodMorningCounter": 861,
+            "stickerCounter": 412,
+            "loveCounter": 61,
+            "beautyCounter": 83,
+            "emojis": {
+                "🙄": 99,
+                "👀": 35,
+                "😴": 51,
+                "😍": 31,
+                "♥": 148,
+                "❤": 122,
+                "💜": 44
+            }
+        },
+        "Rogério M.": {
+            "audioCounter": 532,
+            "mediaCounter": 1670,
+            "messageCounter": 45187,
+            "wordCounter": 287492,
+            "goodMorningCounter": 891,
+            "stickerCounter": 463,
+            "loveCounter": 71,
+            "beautyCounter": 153,
+            "emojis": {
+                "😏": 57,
+                "🤔": 99,
+                "👀": 131,
+                "🙄": 53,
+                "😢": 65,
+                "😘": 79,
+                "😊": 44,
+                "😂": 36,
+                "❤": 427,
+                "😬": 72,
+                "🤷": 38,
+                "😕": 67,
+                "😍": 83,
+                "🙌": 157,
+                "🥰": 52,
+                "🥳": 36,
+                "😉": 36,
+                "♥": 43,
+                "😱": 35,
+                "🤦": 99,
+                "💙": 42
+            }
+        }
+    },
+    "weekdayActivity": {
+        "Sunday": 10291,
+        "Monday": 14461,
+        "Tuesday": 13867,
+        "Wednesday": 14346,
+        "Thursday": 13380,
+        "Friday": 12008,
+        "Saturday": 7630
+    }
+}

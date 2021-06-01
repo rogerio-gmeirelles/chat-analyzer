@@ -1,3 +1,4 @@
+import json
 import nltk
 import datetime
 import unidecode
@@ -142,7 +143,7 @@ def createWordCloud():
     ax.imshow(wordcloud, interpolation='bilinear')
     ax.set_axis_off()
     plt.imshow(wordcloud)
-    wordcloud.to_file("wordcloud.png")
+    wordcloud.to_file("results/wordcloud.png")
 
 # proccess text messages and analyzes behaviour
 def proccessMessage(line):
@@ -202,4 +203,5 @@ def whatsappAnalyzer(chat):
     createWordCloud()
 
     # prints resulting analyzed data
-    print(chatData)
+    with open('results/data.json', 'w') as fp:
+        json.dump(chatData, fp, indent=4, ensure_ascii=False)
